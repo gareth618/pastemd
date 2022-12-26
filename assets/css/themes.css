@@ -1,0 +1,7 @@
+:root {
+  --foreground: #ddd;
+  --background: #222;
+  --middground: #333;
+  --bordground: #888;
+  --gradient: linear-gradient(315deg, #42d392 25%, #647eff);
+}

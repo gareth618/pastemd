@@ -7,8 +7,17 @@ export default {
     return {
       title: '',
       author: '',
-      content: ''
+      content: '',
+      documentId: ''
     };
+  },
+  computed: {
+    error() {
+      if (this.title === '') return 'no title specified';
+      if (this.author === '') return 'no author specified';
+      if (this.content === '') return 'the paste is empty';
+      return '';
+    }
   },
   methods: {
     async publish() {
@@ -17,8 +26,10 @@ export default {
         author: this.author,
         content: this.content
       });
-      navigator.clipboard.writeText(`http://localhost:3000/pastes/${document.id}`);
-      navigateTo(`/pastes/${document.id}`);
+      this.documentId = document.id;
+    },
+    copyLink() {
+      navigator.clipboard.writeText(`http://localhost:3000/pastes/${this.documentId}`);
     }
   }
 };
@@ -28,19 +39,47 @@ export default {
   <main>
     <h1>PasteMd</h1>
     <form @submit.prevent="publish">
-      <div class="inputs">
+      <div class="top">
         <input v-model="title" placeholder="title" />
         <input v-model="author" placeholder="author" />
       </div>
       <textarea v-model="content" placeholder="content" />
-      <div class="button">
-        <button>publish</button>
+      <div class="bottom">
+        <button :disabled="error !== ''" :title="error">
+          publish <FontAwesomeIcon :icon="['fas', 'paper-plane']" />
+        </button>
       </div>
     </form>
   </main>
+  <Transition>
+    <div class="overlay" v-if="documentId !== ''">
+      <div class="message">
+        <div class="text">
+          <p>done! your paste is available at the following link:</p>
+          <p><NuxtLink :to="`/pastes/${documentId}`">{{ `/pastes/${documentId}` }}</NuxtLink></p>
+        </div>
+        <div class="text">
+          <p>done! your paste is available at <NuxtLink :to="`/pastes/${documentId}`">this</NuxtLink> link</p>
+        </div>
+        <button @click="copyLink">
+          <FontAwesomeIcon :icon="['far', 'clipboard']" />
+        </button>
+      </div>
+    </div>
+  </Transition>
 </template>
 
 <style scoped>
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 1s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+
 main {
   display: flex;
   flex-direction: column;
@@ -74,60 +113,138 @@ form {
   width: 100%;
 }
 
-.inputs {
+.top {
   display: flex;
   flex-grow: 1;
   gap: 1rem;
   width: 100%;
 }
 
-.button {
+.bottom {
   display: flex;
   justify-content: right;
+  align-items: center;
   width: 100%;
 }
 
-:where(button, input, textarea) {
+form :where(button, input, textarea) {
   width: 100%;
   padding: 1rem;
   background-color: var(--middground);
   border: 2px solid var(--bordground);
 }
 
-:where(input, textarea)::selection {
+form :where(input, textarea)::selection {
   color: var(--background);
   background-color: var(--foreground);
 }
 
-textarea {
+form textarea {
   height: 300px;
 }
 
-textarea::-webkit-scrollbar {
+form textarea::-webkit-scrollbar {
   width: .5rem;
 }
 
-textarea::-webkit-scrollbar-thumb {
+form textarea::-webkit-scrollbar-thumb {
   background-color: var(--bordground);
 }
 
-button {
+form button {
   padding: 1rem 2rem;
   width: fit-content;
   font-weight: bold;
   background-size: 300%;
   background-image: linear-gradient(135deg, #333, #111);
   border-image: var(--gradient) 25;
-  transition: background-position .5s;
+  transition-duration: .3s;
+  transition-property: background-position, opacity;
 }
 
-button:where(:hover, :focus-visible) {
+form button:not([disabled]):where(:hover, :focus-visible) {
   background-position: 100%;
 }
 
+form button svg {
+  margin-left: .25rem;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  padding: 2rem;
+  backdrop-filter: brightness(30%);
+}
+
+.message {
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  font-weight: bold;
+  border-width: 2px;
+  border-style: solid;
+  border-image: var(--gradient) 25;
+  background-color: var(--background);
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+.text a {
+  color: transparent;
+  background-clip: text;
+  background-image: var(--gradient);
+}
+
+.text a:where(:hover, :focus-visible) {
+  text-decoration: underline;
+  text-decoration-color: var(--foreground);
+}
+
+.message button {
+  padding: .4rem .6rem;
+  font-size: 1.2rem;
+  color: var(--foreground);
+  background-color: var(--middground);
+  border: 1px solid var(--foreground);
+  border-radius: .25rem;
+  transition: background-color .3s;
+}
+
+.message button:where(:hover, :focus-visible) {
+  background-color: var(--background);
+}
+
 @media (max-width: 500px) {
-  .inputs {
+  .top {
     flex-direction: column;
+  }
+
+  .bottom {
+    justify-content: center;
+  }
+
+  .text:nth-child(1) {
+    display: none;
+  }
+}
+
+@media (min-width: 501px) {
+  .text:nth-child(2) {
+    display: none;
   }
 }
 </style>

@@ -119,8 +119,13 @@ main {
 
 article {
   margin: 2rem 0;
+  width: 100%;
   line-height: 1.618;
   text-align: justify;
+}
+
+p {
+  width: 100%;
 }
 
 .buttons {

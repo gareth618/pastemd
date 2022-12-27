@@ -1,42 +1,71 @@
-# Nuxt 3 Minimal Starter
+# PasteMd – an evolved clone of PasteBin
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+the website is live [here](https://pastemd.netlify.com/)
 
-## Setup
+[![Netlify Status](https://api.netlify.com/api/v1/badges/52142d17-58d8-4b84-8fa2-cc0bbff6aa9b/deploy-status)](https://app.netlify.com/sites/pastemd/deploys)
 
-Make sure to install the dependencies:
-
-```bash
-# yarn
-yarn install
-
-# npm
-npm install
-
-# pnpm
-pnpm install --shamefully-hoist
 ```
+`...` code
+;...; keyboard
+:...: emoji
+$...$ latex
+[...](...) link
+?[...](...) abbreviation
 
-## Development Server
+__...__ italic
+**...** bold
+~~...~~ strike
+^^...^^ highlight
 
-Start the development server on http://localhost:3000
+=== horizontal line
+#{2,6} subtitle
+$$...$$ latex
+![alt][width](url) image
 
-```bash
-npm run dev
+quote
+>>>
+  ...
+>>>
+
+list
++++ type
+  > ...
+  > ...
+  > ...
++++
+
+list
++++ type
+  ...
++++
+  ...
++++
+
+block (center, right, warning, danger, tip)
+::: type
+  ...
+:::
+
+###
+  > ...
+  > ...
+###
+  > ...
+  > ...
+###
+
+spoiler
+???
+  ...
+???
+
+code
+""" language -> title => label
+  ...
+"""
+
+csanim
+@@@
+  ...
+@@@
 ```
-
-## Production
-
-Build the application for production:
-
-```bash
-npm run build
-```
-
-Locally preview production build:
-
-```bash
-npm run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.

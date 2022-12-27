@@ -10,7 +10,7 @@ export default {
   },
   methods: {
     copyLink() {
-      navigator.clipboard.writeText(`http://localhost:3000/pastes/${this.pasteId}`);
+      navigator.clipboard.writeText(`https://pastemd.netlify.com/pastes/${this.pasteId}`);
       this.copied = true;
       setTimeout(() => this.copied = false, 3000);
     }

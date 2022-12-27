@@ -3,5 +3,6 @@
   --background: #222;
   --middground: #333;
   --bordground: #888;
-  --gradient: linear-gradient(315deg, #42d392 25%, #647eff);
+  --black-gradient: linear-gradient(135deg, #333, #111);
+  --green-gradient: linear-gradient(315deg, #42d392 25%, #647eff);
 }

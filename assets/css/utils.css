@@ -1,0 +1,57 @@
+.full-screen {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-row {
+  display: flex;
+  flex-grow: 1;
+  gap: 1rem;
+  width: 100%;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.flex-right {
+  display: flex;
+  justify-content: right;
+  width: 100%;
+}
+
+.gradient-text {
+  color: transparent;
+  background-clip: text;
+  background-image: var(--green-gradient);
+}
+
+.gradient-border {
+  border-width: 2px;
+  border-style: solid;
+  border-image: var(--green-gradient) 25;
+}
+
+.gradient-button {
+  background-size: 300%;
+  background-image: var(--black-gradient);
+  transition-duration: .3s;
+  transition-property: background-position, opacity;
+}
+
+.gradient-button:not([disabled]):where(:hover, :focus-visible) {
+  background-position: 100%;
+}
+
+.iconed-button svg {
+  margin-left: .25rem;
+}

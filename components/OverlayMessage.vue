@@ -31,7 +31,7 @@ export default {
           <NuxtLink class="gradient-text" :to="`/pastes/${pasteId}`">this</NuxtLink> link
         </p>
       </div>
-      <button class="gradient-button" @click="copyLink" :disabled="copied" title="copy link">
+      <button class="soft-button gradient-button" @click="copyLink" :disabled="copied" title="copy link">
         <FontAwesomeIcon :icon="[copied ? 'fas' : 'far', 'clipboard']" />
       </button>
     </div>
@@ -76,11 +76,7 @@ a:where(:hover, :focus-visible) {
 }
 
 button {
-  padding: .5rem .7rem;
   font-size: 1.2rem;
-  color: var(--foreground);
-  border: 1px solid var(--foreground);
-  border-radius: .25rem;
 }
 
 @media (max-width: 600px) {

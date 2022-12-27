@@ -24,7 +24,9 @@ export default {
       const document = await addDoc(collection(firestore, 'pastes'), {
         title: this.title,
         author: this.author,
-        content: this.content
+        content: this.content,
+        likeCount: 0,
+        dislikeCount: 0
       });
       this.documentId = document.id;
     }
@@ -33,6 +35,9 @@ export default {
 </script>
 
 <template>
+  <Head>
+    <Title>PasteMd</Title>
+  </Head>
   <main class="flex-col">
     <h1 class="gradient-text">PasteMd</h1>
     <form class="flex-col" @submit.prevent="publish">
@@ -42,8 +47,9 @@ export default {
       </div>
       <textarea v-model="content" placeholder="content" />
       <div class="bottom flex-right">
-        <button class="gradient-button gradient-border iconed-button" :disabled="error !== ''" :title="error">
-          publish <FontAwesomeIcon :icon="['fas', 'paper-plane']" />
+        <button class="gradient-button gradient-border iconed" :disabled="error !== ''" :title="error">
+          publish
+          <FontAwesomeIcon :icon="['fas', 'paper-plane']" />
         </button>
       </div>
     </form>

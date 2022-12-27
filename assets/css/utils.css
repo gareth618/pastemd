@@ -45,13 +45,20 @@
   background-size: 300%;
   background-image: var(--black-gradient);
   transition-duration: .3s;
-  transition-property: background-position, opacity;
+  transition-property: background-position, opacity, color, border-color;
 }
 
 .gradient-button:not([disabled]):where(:hover, :focus-visible) {
   background-position: 100%;
 }
 
-.iconed-button svg {
+.soft-button {
+  padding: .5rem .7rem;
+  color: var(--foreground);
+  border: 1px solid var(--foreground);
+  border-radius: .25rem;
+}
+
+.iconed svg {
   margin-left: .25rem;
 }

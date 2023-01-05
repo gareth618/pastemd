@@ -16,6 +16,12 @@ export default {
     };
   },
   async mounted() {
+    if (this.pasteId === 'preview') {
+      this.title = localStorage.getItem('preview.title');
+      this.author = localStorage.getItem('preview.author');
+      this.content = localStorage.getItem('preview.content');
+      return;
+    }
     const localReview = localStorage.getItem(this.pasteId);
     if (localReview != null) this.review = localReview;
     this.unsubscribe = onSnapshot(doc(firestore, 'pastes', this.pasteId), document => {
@@ -75,7 +81,7 @@ export default {
     <article class="flex-col">
       <p v-for="paragraph of content.split('\n')">{{ paragraph }}</p>
     </article>
-    <div class="buttons">
+    <div v-if="pasteId !== 'preview'" class="buttons">
       <button
         class="soft-button gradient-button" :class="{ active: review === 'like' }"
         @click="like" :disabled="review === 'dislike'" title="like"

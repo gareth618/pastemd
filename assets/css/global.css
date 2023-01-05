@@ -41,7 +41,7 @@ body {
   opacity: .5;
 }
 
-:where(input, textarea) {
+:where(input, textarea, pre, code) {
   font-family: 'Source Code Pro', monospace;
 }
 
@@ -55,6 +55,11 @@ button:not([disabled]) {
 
 textarea {
   resize: none;
+  line-height: 1.4;
+}
+
+pre {
+  font-size: 1rem;
   line-height: 1.4;
 }
 

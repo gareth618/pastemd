@@ -26,6 +26,7 @@
 .flex-right {
   display: flex;
   justify-content: right;
+  gap: 1rem;
   width: 100%;
 }
 

@@ -20,6 +20,12 @@ export default {
     }
   },
   methods: {
+    preview() {
+      localStorage.setItem('preview.title', this.title);
+      localStorage.setItem('preview.author', this.author);
+      localStorage.setItem('preview.content', this.content);
+      window.open('/pastes/preview', 'preview');
+    },
     async publish() {
       const document = await addDoc(collection(firestore, 'pastes'), {
         title: this.title,
@@ -40,14 +46,18 @@ export default {
   </Head>
   <main class="flex-col">
     <h1 class="gradient-text">PasteMd</h1>
-    <form class="flex-col" @submit.prevent="publish">
+    <form class="flex-col" @submit.prevent>
       <div class="top flex-row">
         <input v-model="title" placeholder="title" />
         <input v-model="author" placeholder="author" />
       </div>
-      <textarea v-model="content" placeholder="content" />
+      <ExplicitEditor class="editor" v-model="content" placeholder="content" />
       <div class="bottom flex-right">
-        <button class="gradient-button gradient-border iconed" :disabled="error !== ''" :title="error">
+        <button class="gradient-button iconed" @click="preview" :disabled="error !== ''" :title="error">
+          preview
+          <FontAwesomeIcon :icon="['fas', 'eye']" />
+        </button>
+        <button class="gradient-button gradient-border iconed" @click="publish" :disabled="error !== ''" :title="error">
           publish
           <FontAwesomeIcon :icon="['fas', 'paper-plane']" />
         </button>
@@ -82,33 +92,31 @@ form {
   width: 100%;
 }
 
-:where(input, textarea) {
+input {
   width: 100%;
   padding: 1rem;
   background-color: var(--middground);
   border: 2px solid var(--bordground);
 }
 
-:where(input, textarea)::selection {
+input::selection {
   color: var(--background);
   background-color: var(--foreground);
 }
 
-textarea {
+.editor {
+  width: 100%;
   height: 300px;
 }
 
-textarea::-webkit-scrollbar {
-  width: .5rem;
-}
-
-textarea::-webkit-scrollbar-thumb {
-  background-color: var(--bordground);
-}
-
 button {
-  padding: 1rem 2rem;
+  padding: 1rem 1.618rem;
   font-weight: bold;
+}
+
+button:not(.gradient-border) {
+  background-color: var(--middground);
+  border: 2px solid var(--bordground);
 }
 
 @media (max-width: 500px) {
@@ -118,6 +126,20 @@ button {
 
   .bottom {
     justify-content: center;
+  }
+
+  button {
+    width: 50%;
+  }
+}
+
+@media (max-width: 350px) {
+  .bottom {
+    flex-direction: column;
+  }
+
+  button {
+    width: 100%;
   }
 }
 </style>

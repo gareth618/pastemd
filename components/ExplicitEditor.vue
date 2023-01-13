@@ -28,7 +28,7 @@ export default {
     onScroll() {
       this.$refs.output.scrollTop = this.$refs.input.scrollTop;
     },
-    onTabDown() {
+    indent() {
       const start = this.$refs.input.selectionStart;
       this.content = this.content.slice(0, start) + '  ' + this.content.slice(start);
       setTimeout(() => {
@@ -51,7 +51,7 @@ export default {
       :placeholder="placeholder"
       v-model="content"
       @scroll="onScroll"
-      @keydown.tab.prevent="onTabDown"
+      @keydown.ctrl.i="indent"
     />
   </div>
 </template>

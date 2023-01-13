@@ -1,6 +1,7 @@
 <script>
 import firestore from '@/firebase';
 import { doc, onSnapshot, updateDoc } from '@firebase/firestore';
+import parse from '@/explicit/parser.js';
 
 export default {
   data() {
@@ -17,9 +18,9 @@ export default {
   },
   async mounted() {
     if (this.pasteId === 'preview') {
-      this.title = localStorage.getItem('preview.title');
-      this.author = localStorage.getItem('preview.author');
-      this.content = localStorage.getItem('preview.content');
+      this.title = localStorage.getItem('preview.title') || '';
+      this.author = localStorage.getItem('preview.author') || '';
+      this.content = localStorage.getItem('preview.content') || '';
       return;
     }
     const localReview = localStorage.getItem(this.pasteId);
@@ -38,6 +39,7 @@ export default {
     this.unsubscribe();
   },
   methods: {
+    parse,
     async like() {
       await updateDoc(doc(firestore, 'pastes', this.pasteId), {
         likeCount: this.likeCount + (this.review === 'like' ? -1 : +1)
@@ -80,6 +82,7 @@ export default {
     </div>
     <article class="flex-col">
       <p v-for="paragraph of content.split('\n')">{{ paragraph }}</p>
+      <!-- <pre>{{ JSON.stringify(parse(content), null, 2) }}</pre> -->
     </article>
     <div v-if="pasteId !== 'preview'" class="buttons">
       <button

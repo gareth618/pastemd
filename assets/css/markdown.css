@@ -2,13 +2,127 @@
   line-height: 1.618;
 }
 
-.markdown p {
-  width: 100%;
-  text-align: justify;
+.markdown :where(h1, h2, h3, h4, h5, h6) {
+  margin: 2rem 0 1rem 0;
 }
 
-@media (max-width: 700px) {
+.markdown h1 { font-size: 2.0rem; }
+.markdown h2 { font-size: 1.8rem; }
+.markdown h3 { font-size: 1.6rem; }
+.markdown h4 { font-size: 1.4rem; }
+.markdown h5 { font-size: 1.2rem; }
+.markdown h6 { font-size: 1.0rem; }
+
+.markdown p {
+  margin: 1rem 0;
+}
+
+.markdown hr {
+  margin: 1rem 0;
+  height: 2px;
+  background-image: linear-gradient(to right, transparent, 5%, var(--middground), 95%, transparent);
+  border: none;
+}
+
+.markdown img:not(.emoji) {
+  display: block;
+  margin: 1rem auto;
+  max-width: min(500px, 100%);
+  max-height: 500px;
+}
+
+.markdown blockquote {
+  margin: 1rem 0;
+  padding: 1px 0 1px 1rem;
+  background-color: var(--middground);
+  border-left: .5rem solid var(--bluee);
+}
+
+.markdown :where(ul, ol) {
+  margin: 1rem 0;
+  padding-inline-start: 2.5rem;
+}
+
+.markdown ul li::marker {
+  color: var(--green);
+}
+
+.markdown ol li {
+  counter-increment: ol-list;
+  position: relative;
+}
+
+.markdown ol li::marker {
+  content: '';
+}
+
+.markdown ol li::before {
+  content: counter(ol-list);
+  position: absolute;
+  top: .25rem;
+  left: -1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 1rem;
+  height: 1rem;
+  line-height: 1;
+  font-size: .8rem;
+  font-weight: bold;
+  font-family: 'Montserrat Alternates', sans-serif;
+  background-color: var(--bluee);
+  border-radius: 50%;
+}
+
+.markdown table {
+  margin: 1rem auto;
+  text-align: left;
+  border-collapse: collapse;
+}
+
+.markdown :where(th, td) {
+  padding: .5rem;
+  border: 2px solid var(--bordground);
+}
+
+.markdown tr:hover {
+  background-color: var(--middground);
+}
+
+.markdown a {
+  color: var(--green);
+  text-decoration: underline solid var(--bluee) 2px;
+  text-underline-offset: 3px;
+}
+
+.markdown a:where(:hover, :focus-visible) {
+  color: inherit;
+  background-color: var(--bluee);
+  text-decoration-skip-ink: none;
+}
+
+.markdown code {
+  padding: .1rem .25rem;
+  background-color: var(--middground);
+  border: 1px solid var(--bordground);
+}
+
+.markdown pre {
+  margin: 1rem 0;
+  padding: 1rem;
+  background-color: var(--middground);
+  border: 2px solid var(--bordground);
+}
+
+.markdown pre code {
+  padding: 0;
+  background: none;
+  border: none;
+}
+
+@media (min-width: 701px) {
   .markdown p {
-    text-align: left;
+    text-align: justify;
   }
 }

@@ -3,6 +3,8 @@
   --background: #222;
   --middground: #333;
   --bordground: #888;
+  --green: #42d392;
+  --bluee: #647eff;
   --black-gradient: linear-gradient(135deg, #333, #111);
-  --green-gradient: linear-gradient(315deg, #42d392 25%, #647eff);
+  --green-gradient: linear-gradient(315deg, var(--green) 25%, var(--bluee));
 }

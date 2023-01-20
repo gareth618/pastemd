@@ -141,12 +141,13 @@ main {
 }
 
 .title {
-  font-size: 2rem;
+  padding: .25rem;
+  font-size: 3rem;
   text-align: center;
 }
 
 .author {
-  font-size: 1.5rem;
+  font-size: 2rem;
   text-align: center;
   opacity: .75;
 }
@@ -193,7 +194,7 @@ article:deep(img.emoji) {
   font-size: 1rem;
   text-align: center;
   color: var(--bordground);
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Montserrat Alternates', sans-serif;
   cursor: default;
 }
 </style>

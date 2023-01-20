@@ -16,6 +16,6 @@ h1 {
 }
 
 svg {
-  color: #42d392;
+  color: var(--green);
 }
 </style>

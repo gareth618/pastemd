@@ -1,9 +1,17 @@
 <script>
 import prism from 'prismjs';
-import grammar from '@/explicit/grammar';
-
+import 'prismjs/components/prism-markup';
+import 'prismjs/components/prism-css';
+import 'prismjs/components/prism-javascript';
+import 'prismjs/components/prism-json';
+import 'prismjs/components/prism-c';
+import 'prismjs/components/prism-cpp';
+import 'prismjs/components/prism-java';
+import 'prismjs/components/prism-python';
+import 'prismjs/components/prism-bash';
+import 'prismjs/components/prism-latex';
+import 'prismjs/components/prism-markdown';
 prism.highlightAll = () => { };
-prism.languages.explicit = grammar;
 
 export default {
   props: {
@@ -23,7 +31,7 @@ export default {
   },
   methods: {
     highlight(code) {
-      return prism.highlight(code, prism.languages.explicit, 'explicit');
+      return prism.highlight(code, prism.languages.markdown, 'markdown');
     },
     onScroll() {
       this.$refs.output.scrollTop = this.$refs.input.scrollTop;
@@ -43,7 +51,7 @@ export default {
 <template>
   <div>
     <pre ref="output"><code
-      class="language-explicit"
+      class="language-markdown"
       v-html="highlight(content + (content.slice(-1) === '\n' ? ' ' : ''))"
     /></pre>
     <textarea

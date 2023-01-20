@@ -1,10 +1,32 @@
 <script>
 import firestore from '@/firebase';
 import { doc, onSnapshot, updateDoc } from '@firebase/firestore';
-import parse from '@/explicit/parser.js';
+
+import twemoji from 'twemoji';
+import MarkdownIt from 'markdown-it';
+import katex from '@iktakahiro/markdown-it-katex';
+
+import prism from 'prismjs';
+import 'prismjs/components/prism-markup';
+import 'prismjs/components/prism-css';
+import 'prismjs/components/prism-javascript';
+import 'prismjs/components/prism-json';
+import 'prismjs/components/prism-c';
+import 'prismjs/components/prism-cpp';
+import 'prismjs/components/prism-java';
+import 'prismjs/components/prism-python';
+import 'prismjs/components/prism-bash';
+import 'prismjs/components/prism-latex';
+import 'prismjs/components/prism-markdown';
+prism.highlightAll = () => { };
 
 export default {
   data() {
+    const markdown = new MarkdownIt({
+      langPrefix: 'language-',
+      highlight: (code, language) => prism.highlight(code, prism.languages[language], language)
+    });
+    markdown.use(katex);
     return {
       title: '',
       author: '',
@@ -13,6 +35,7 @@ export default {
       dislikeCount: 0,
       pasteId: this.$route.params.id,
       review: '',
+      markdown,
       unsubscribe: () => { }
     };
   },
@@ -38,8 +61,13 @@ export default {
   unmounted() {
     this.unsubscribe();
   },
+  updated() {
+    twemoji.parse(this.$refs.article, {
+      folder: 'svg',
+      ext: '.svg'
+    });
+  },
   methods: {
-    parse,
     async like() {
       await updateDoc(doc(firestore, 'pastes', this.pasteId), {
         likeCount: this.likeCount + (this.review === 'like' ? -1 : +1)
@@ -80,10 +108,11 @@ export default {
       {{ author }}
       <FontAwesomeIcon :icon="['fas', 'pen-nib']" />
     </div>
-    <article class="flex-col">
-      <p v-for="paragraph of content.split('\n')">{{ paragraph }}</p>
-      <!-- <pre>{{ JSON.stringify(parse(content), null, 2) }}</pre> -->
-    </article>
+    <article
+      ref="article"
+      class="markdown"
+      v-html="markdown.render(content)"
+    />
     <div v-if="pasteId !== 'preview'" class="buttons">
       <button
         class="soft-button gradient-button" :class="{ active: review === 'like' }"
@@ -129,12 +158,11 @@ main {
 article {
   margin: 2rem 0;
   width: 100%;
-  line-height: 1.618;
-  text-align: justify;
 }
 
-p {
-  width: 100%;
+article:deep(img.emoji) {
+  height: 1.2em;
+  margin-bottom: -.25em;
 }
 
 .buttons {
@@ -167,11 +195,5 @@ p {
   color: var(--bordground);
   font-family: 'Montserrat', sans-serif;
   cursor: default;
-}
-
-@media (max-width: 700px) {
-  article {
-    text-align: left;
-  }
 }
 </style>

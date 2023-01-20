@@ -1,0 +1,14 @@
+.markdown {
+  line-height: 1.618;
+}
+
+.markdown p {
+  width: 100%;
+  text-align: justify;
+}
+
+@media (max-width: 700px) {
+  .markdown p {
+    text-align: left;
+  }
+}

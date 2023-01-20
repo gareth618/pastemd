@@ -51,7 +51,7 @@ export default {
         <input v-model="title" placeholder="title" />
         <input v-model="author" placeholder="author" />
       </div>
-      <ExplicitEditor class="editor" v-model="content" placeholder="content" />
+      <MarkdownEditor class="editor" v-model="content" placeholder="content" />
       <div class="bottom flex-right">
         <button class="gradient-button iconed" @click="preview" :disabled="error !== ''" :title="error">
           preview

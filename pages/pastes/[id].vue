@@ -2,23 +2,10 @@
 import firestore from '@/firebase';
 import { doc, onSnapshot, updateDoc } from '@firebase/firestore';
 
-import twemoji from 'twemoji';
 import MarkdownIt from 'markdown-it';
+import prism from '@/prism';
+import twemoji from 'twemoji';
 import katex from '@iktakahiro/markdown-it-katex';
-
-import prism from 'prismjs';
-import 'prismjs/components/prism-markup';
-import 'prismjs/components/prism-css';
-import 'prismjs/components/prism-javascript';
-import 'prismjs/components/prism-json';
-import 'prismjs/components/prism-c';
-import 'prismjs/components/prism-cpp';
-import 'prismjs/components/prism-java';
-import 'prismjs/components/prism-python';
-import 'prismjs/components/prism-bash';
-import 'prismjs/components/prism-latex';
-import 'prismjs/components/prism-markdown';
-prism.highlightAll = () => { };
 
 export default {
   data() {

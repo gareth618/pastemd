@@ -3,15 +3,15 @@ import firestore from '@/firebase';
 import { doc, onSnapshot, updateDoc } from '@firebase/firestore';
 
 import MarkdownIt from 'markdown-it';
-import prism from '@/prism';
 import twemoji from 'twemoji';
+import highlight from '@/prism';
 import katex from '@iktakahiro/markdown-it-katex';
 
 export default {
   data() {
     const markdown = new MarkdownIt({
       langPrefix: 'language-',
-      highlight: (code, language) => prism.highlight(code, prism.languages[language], language)
+      highlight
     });
     markdown.use(katex);
     return {

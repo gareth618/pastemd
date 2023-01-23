@@ -1,5 +1,5 @@
 <script>
-import prism from '@/prism';
+import highlight from '@/prism';
 
 export default {
   props: {
@@ -18,9 +18,7 @@ export default {
     }
   },
   methods: {
-    highlight(code) {
-      return prism.highlight(code, prism.languages.markdown, 'markdown');
-    },
+    highlight,
     onScroll() {
       this.$refs.output.scrollTop = this.$refs.input.scrollTop;
     },
@@ -40,7 +38,7 @@ export default {
   <div>
     <pre ref="output"><code
       class="language-markdown"
-      v-html="highlight(content + (content.slice(-1) === '\n' ? ' ' : ''))"
+      v-html="highlight(content + (content.slice(-1) === '\n' ? ' ' : ''), 'markdown')"
     /></pre>
     <textarea
       ref="input"

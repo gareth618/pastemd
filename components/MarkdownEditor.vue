@@ -31,7 +31,8 @@ export default {
   },
   methods: {
     highlight(code) {
-      return prism.highlight(code, prism.languages.markdown, 'markdown');
+      return code;
+      // return prism.highlight(code, prism.languages.markdown, 'markdown');
     },
     onScroll() {
       this.$refs.output.scrollTop = this.$refs.input.scrollTop;

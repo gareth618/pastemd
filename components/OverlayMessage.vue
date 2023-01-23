@@ -10,9 +10,10 @@ export default {
   },
   methods: {
     copyLink() {
-      navigator.clipboard.writeText(`https://pastemd.netlify.com/pastes/${this.pasteId}`);
+      const baseUrl = process.env.NODE_ENV === 'production' ? 'https://pastemd.netlify.com' : 'http://localhost:3000';
+      navigator.clipboard.writeText(`${baseUrl}/pastes/${this.pasteId}`);
       this.copied = true;
-      setTimeout(() => this.copied = false, 3000);
+      setTimeout(() => this.copied = false, 1618);
     }
   }
 };

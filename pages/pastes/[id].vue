@@ -19,9 +19,8 @@ export default {
       author: '',
       content: '',
       likeCount: 0,
-      dislikeCount: 0,
       pasteId: this.$route.params.id,
-      review: '',
+      pasteReview: '',
       markdown,
       unsubscribe: () => { }
     };
@@ -31,10 +30,12 @@ export default {
       this.title = localStorage.getItem('preview.title') || '';
       this.author = localStorage.getItem('preview.author') || '';
       this.content = localStorage.getItem('preview.content') || '';
+      if (this.title === '') this.title = 'untitled';
+      if (this.author === '') this.author = 'anonymous';
       return;
     }
     const localReview = localStorage.getItem(this.pasteId);
-    if (localReview != null) this.review = localReview;
+    if (localReview != null) this.pasteReview = localReview;
     this.unsubscribe = onSnapshot(doc(firestore, 'pastes', this.pasteId), document => {
       if (!document.exists()) return navigateTo('/pastes');
       const data = document.data();
@@ -42,7 +43,6 @@ export default {
       this.author = data.author;
       this.content = data.content;
       this.likeCount = data.likeCount;
-      this.dislikeCount = data.dislikeCount;
     });
   },
   unmounted() {
@@ -57,28 +57,15 @@ export default {
   methods: {
     async like() {
       await updateDoc(doc(firestore, 'pastes', this.pasteId), {
-        likeCount: this.likeCount + (this.review === 'like' ? -1 : +1)
+        likeCount: this.likeCount + (this.pasteReview === 'like' ? -1 : +1)
       });
-      if (this.review === 'like') {
-        this.review = '';
+      if (this.pasteReview === 'like') {
+        this.pasteReview = '';
         localStorage.removeItem(this.pasteId);
       }
       else {
-        this.review = 'like';
+        this.pasteReview = 'like';
         localStorage.setItem(this.pasteId, 'like');
-      }
-    },
-    async dislike() {
-      await updateDoc(doc(firestore, 'pastes', this.pasteId), {
-        dislikeCount: this.dislikeCount + (this.review === 'dislike' ? -1 : +1)
-      });
-      if (this.review === 'dislike') {
-        this.review = '';
-        localStorage.removeItem(this.pasteId);
-      }
-      else {
-        this.review = 'dislike';
-        localStorage.setItem(this.pasteId, 'dislike');
       }
     }
   }
@@ -91,10 +78,7 @@ export default {
   </Head>
   <main class="flex-col">
     <h1 class="title gradient-text">{{ title }}</h1>
-    <div class="author iconed">
-      {{ author }}
-      <FontAwesomeIcon :icon="['fas', 'pen-nib']" />
-    </div>
+    <div class="author">{{ author }}</div>
     <article
       ref="article"
       class="markdown"
@@ -102,18 +86,13 @@ export default {
     />
     <div v-if="pasteId !== 'preview'" class="buttons">
       <button
-        class="soft-button gradient-button" :class="{ active: review === 'like' }"
-        @click="like" :disabled="review === 'dislike'" title="like"
+        class="soft-button gradient-button"
+        :class="{ active: pasteReview === 'like' }"
+        title="like"
+        @click="like"
       >
         <FontAwesomeIcon class="fa-fw" :icon="['fas', 'heart']" />
         <span v-if="likeCount > 0">{{ likeCount }}</span>
-      </button>
-      <button
-        class="soft-button gradient-button" :class="{ active: review === 'dislike' }"
-        @click="dislike" :disabled="review === 'like'" title="dislike"
-      >
-        <FontAwesomeIcon class="fa-fw" :icon="['fas', 'trash']" />
-        <span v-if="dislikeCount > 0">{{ dislikeCount }}</span>
       </button>
     </div>
   </main>
@@ -137,10 +116,6 @@ main {
   font-size: 2rem;
   text-align: center;
   opacity: .75;
-}
-
-.author:not(:hover) svg {
-  display: none;
 }
 
 article {

@@ -8,11 +8,14 @@ export default {
       title: '',
       author: '',
       content: '',
-      documentId: ''
+      pasteId: ''
     };
   },
   computed: {
-    error() {
+    previewError() {
+      return this.content === '' ? 'the paste is empty' : '';
+    },
+    publishError() {
       if (this.title === '') return 'no title specified';
       if (this.author === '') return 'no author specified';
       if (this.content === '') return 'the paste is empty';
@@ -31,10 +34,9 @@ export default {
         title: this.title,
         author: this.author,
         content: this.content,
-        likeCount: 0,
-        dislikeCount: 0
+        likeCount: 0
       });
-      this.documentId = document.id;
+      this.pasteId = document.id;
     }
   }
 };
@@ -53,11 +55,11 @@ export default {
       </div>
       <MarkdownEditor class="editor" v-model="content" placeholder="content" />
       <div class="bottom flex-right">
-        <button class="gradient-button iconed" @click="preview" :disabled="error !== ''" :title="error">
+        <button class="gradient-button iconed" @click="preview" :disabled="previewError !== ''" :title="previewError">
           preview
           <FontAwesomeIcon :icon="['fas', 'eye']" />
         </button>
-        <button class="gradient-button gradient-border iconed" @click="publish" :disabled="error !== ''" :title="error">
+        <button class="gradient-button gradient-border iconed" @click="publish" :disabled="publishError !== ''" :title="publishError">
           publish
           <FontAwesomeIcon :icon="['fas', 'paper-plane']" />
         </button>
@@ -65,7 +67,7 @@ export default {
     </form>
   </main>
   <Transition>
-    <OverlayMessage v-if="documentId !== ''" :pasteId="documentId" />
+    <OverlayMessage v-if="pasteId !== ''" :pasteId="pasteId" />
   </Transition>
 </template>
 

@@ -15,6 +15,10 @@ import 'prismjs/components/prism-markdown';
 prism.highlightAll = () => { };
 
 export default function highlight(code, language) {
-  console.log(prism.languages);
-  return prism.highlight(code, prism.languages[language], language);
+  try {
+    return prism.highlight(code, prism.languages[language], language);
+  }
+  catch (_) {
+    return code;
+  }
 };

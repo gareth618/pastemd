@@ -1,4 +1,4 @@
-# PasteMd – an evolved clone of PasteBin
+# PasteMd – a PasteBin clone for `.md` files
 
 The website is live [here](https://pastemd.netlify.com/).
 
@@ -8,6 +8,8 @@ This [paste](https://pastemd.netlify.com/pastes/pGQk4YYgnDnZjhMRcuxd) is a reall
 
 ## ToDo
 
-- [ ] delete and update with crypto and `localStorage`
+- [ ] validate edit and delete
+- [ ] editor selection commands
+- [ ] my pastes page
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/52142d17-58d8-4b84-8fa2-cc0bbff6aa9b/deploy-status)](https://app.netlify.com/sites/pastemd/deploys)

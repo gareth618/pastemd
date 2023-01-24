@@ -1,6 +1,6 @@
 <script>
 import firestore from '@/firebase';
-import { doc, onSnapshot, updateDoc } from '@firebase/firestore';
+import { doc, updateDoc, deleteDoc, onSnapshot } from '@firebase/firestore';
 
 import MarkdownIt from 'markdown-it';
 import twemoji from 'twemoji';
@@ -37,7 +37,7 @@ export default {
     const localReview = localStorage.getItem(this.pasteId);
     if (localReview != null) this.pasteReview = localReview;
     this.unsubscribe = onSnapshot(doc(firestore, 'pastes', this.pasteId), document => {
-      if (!document.exists()) return navigateTo('/pastes');
+      if (!document.exists()) return this.$router.replace('/pastes');
       const data = document.data();
       this.title = data.title;
       this.author = data.author;
@@ -67,6 +67,17 @@ export default {
         this.pasteReview = 'like';
         localStorage.setItem(this.pasteId, 'like');
       }
+    },
+    edit() {
+      localStorage.setItem('editing', this.pasteId);
+      this.$router.push('/');
+    },
+    async remove() {
+      if (confirm('are you sure you want to delete this paste?')) {
+        await deleteDoc(doc(firestore, 'pastes', this.pasteId));
+        alert('paste deleted successfully!');
+        this.$router.replace('/');
+      }
     }
   }
 };
@@ -93,6 +104,12 @@ export default {
       >
         <FontAwesomeIcon class="fa-fw" :icon="['fas', 'heart']" />
         <span v-if="likeCount > 0">{{ likeCount }}</span>
+      </button>
+      <button class="soft-button gradient-button" title="edit" @click="edit">
+        <FontAwesomeIcon class="fa-fw" :icon="['fas', 'pencil']" />
+      </button>
+      <button class="soft-button gradient-button" title="delete" @click="remove">
+        <FontAwesomeIcon class="fa-fw" :icon="['fas', 'trash']" />
       </button>
     </div>
   </main>
@@ -143,9 +160,14 @@ article:deep(img.emoji) {
   border-color: red;
 }
 
-.buttons button:nth-child(2).active {
-  color: royalblue;
-  border-color: royalblue;
+.buttons button:nth-child(2):where(:hover, :focus-visible) {
+  color: greenyellow;
+  border-color: greenyellow;
+}
+
+.buttons button:nth-child(3):where(:hover, :focus-visible) {
+  color: cornflowerblue;
+  border-color: cornflowerblue;
 }
 
 .buttons span {

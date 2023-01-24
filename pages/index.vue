@@ -1,6 +1,6 @@
 <script>
 import firestore from '@/firebase';
-import { addDoc, collection } from '@firebase/firestore';
+import { doc, addDoc, getDoc, updateDoc, collection } from '@firebase/firestore';
 
 export default {
   data() {
@@ -8,8 +8,18 @@ export default {
       title: '',
       author: '',
       content: '',
-      pasteId: ''
+      pasteId: '',
+      published: false
     };
+  },
+  async mounted() {
+    const localPasteId = localStorage.getItem('editing');
+    if (localPasteId == null) return;
+    this.pasteId = localPasteId;
+    const paste = (await getDoc(doc(firestore, 'pastes', this.pasteId))).data();
+    this.title = paste.title;
+    this.author = paste.author;
+    this.content = paste.content;
   },
   computed: {
     previewError() {
@@ -30,13 +40,24 @@ export default {
       window.open('/pastes/preview', 'preview');
     },
     async publish() {
-      const document = await addDoc(collection(firestore, 'pastes'), {
-        title: this.title,
-        author: this.author,
-        content: this.content,
-        likeCount: 0
-      });
-      this.pasteId = document.id;
+      if (this.pasteId === '') {
+        const document = await addDoc(collection(firestore, 'pastes'), {
+          title: this.title,
+          author: this.author,
+          content: this.content,
+          likeCount: 0
+        });
+        this.pasteId = document.id;
+      }
+      else {
+        await updateDoc(doc(firestore, 'pastes', this.pasteId), {
+          title: this.title,
+          author: this.author,
+          content: this.content
+        });
+        localStorage.removeItem('editing');
+      }
+      this.published = true;
     }
   }
 };
@@ -60,14 +81,14 @@ export default {
           <FontAwesomeIcon :icon="['fas', 'eye']" />
         </button>
         <button class="gradient-button gradient-border iconed" @click="publish" :disabled="publishError !== ''" :title="publishError">
-          publish
+          {{ pasteId === '' ? 'publish' : 'update' }}
           <FontAwesomeIcon :icon="['fas', 'paper-plane']" />
         </button>
       </div>
     </form>
   </main>
   <Transition>
-    <OverlayMessage v-if="pasteId !== ''" :pasteId="pasteId" />
+    <OverlayMessage v-if="published" :pasteId="pasteId" />
   </Transition>
 </template>
 

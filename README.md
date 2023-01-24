@@ -8,8 +8,9 @@ This [paste](https://pastemd.netlify.com/pastes/pGQk4YYgnDnZjhMRcuxd) is a reall
 
 ## ToDo
 
-- [ ] validate edit and delete
+- [ ] css
 - [ ] editor selection commands
 - [ ] my pastes page
+- [ ] meta
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/52142d17-58d8-4b84-8fa2-cc0bbff6aa9b/deploy-status)](https://app.netlify.com/sites/pastemd/deploys)

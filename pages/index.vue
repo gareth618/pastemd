@@ -1,6 +1,7 @@
 <script>
-import firestore from '@/firebase';
+import { auth, store } from '@/firebase';
 import { doc, addDoc, getDoc, updateDoc, collection } from '@firebase/firestore';
+import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider } from '@firebase/auth';
 
 export default {
   data() {
@@ -9,14 +10,16 @@ export default {
       author: '',
       content: '',
       pasteId: '',
+      userId: '',
       published: false
     };
   },
   async mounted() {
+    onAuthStateChanged(auth(), user => this.userId = user?.uid || '');
     const localPasteId = localStorage.getItem('editing');
     if (localPasteId == null) return;
     this.pasteId = localPasteId;
-    const paste = (await getDoc(doc(firestore, 'pastes', this.pasteId))).data();
+    const paste = (await getDoc(doc(store(), 'pastes', this.pasteId))).data();
     this.title = paste.title;
     this.author = paste.author;
     this.content = paste.content;
@@ -40,17 +43,27 @@ export default {
       window.open('/pastes/preview', 'preview');
     },
     async publish() {
+      if (this.userId === '') {
+        try {
+          this.userId = (await signInWithPopup(auth(), new GoogleAuthProvider())).user.uid;
+        }
+        catch (_) {
+          alert('there was an error at sign-in');
+          return;
+        }
+      }
       if (this.pasteId === '') {
-        const document = await addDoc(collection(firestore, 'pastes'), {
+        const document = await addDoc(collection(store(), 'pastes'), {
           title: this.title,
           author: this.author,
           content: this.content,
-          likeCount: 0
+          likeCount: 0,
+          authorId: this.userId
         });
         this.pasteId = document.id;
       }
       else {
-        await updateDoc(doc(firestore, 'pastes', this.pasteId), {
+        await updateDoc(doc(store(), 'pastes', this.pasteId), {
           title: this.title,
           author: this.author,
           content: this.content
@@ -76,14 +89,12 @@ export default {
       </div>
       <MarkdownEditor class="editor" v-model="content" placeholder="content" />
       <div class="bottom flex-right">
-        <button class="gradient-button iconed" @click="preview" :disabled="previewError !== ''" :title="previewError">
+        <EditorButton icon="eye" @click="preview" :error="previewError">
           preview
-          <FontAwesomeIcon :icon="['fas', 'eye']" />
-        </button>
-        <button class="gradient-button gradient-border iconed" @click="publish" :disabled="publishError !== ''" :title="publishError">
+        </EditorButton>
+        <EditorButton class="gradient-border" icon="paper-plane" @click="publish" :error="publishError">
           {{ pasteId === '' ? 'publish' : 'update' }}
-          <FontAwesomeIcon :icon="['fas', 'paper-plane']" />
-        </button>
+        </EditorButton>
       </div>
     </form>
   </main>

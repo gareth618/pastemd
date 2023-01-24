@@ -1,5 +1,6 @@
 <script>
-import firestore from '@/firebase';
+import { auth, store } from '@/firebase';
+import { onAuthStateChanged } from '@firebase/auth';
 import { doc, updateDoc, deleteDoc, onSnapshot } from '@firebase/firestore';
 
 import MarkdownIt from 'markdown-it';
@@ -18,14 +19,17 @@ export default {
       title: '',
       author: '',
       content: '',
+      authorId: '',
       likeCount: 0,
       pasteId: this.$route.params.id,
+      userId: '',
       pasteReview: '',
       markdown,
       unsubscribe: () => { }
     };
   },
   async mounted() {
+    onAuthStateChanged(auth(), user => this.userId = user?.uid || '');
     if (this.pasteId === 'preview') {
       this.title = localStorage.getItem('preview.title') || '';
       this.author = localStorage.getItem('preview.author') || '';
@@ -34,15 +38,16 @@ export default {
       if (this.author === '') this.author = 'anonymous';
       return;
     }
-    const localReview = localStorage.getItem(this.pasteId);
-    if (localReview != null) this.pasteReview = localReview;
-    this.unsubscribe = onSnapshot(doc(firestore, 'pastes', this.pasteId), document => {
-      if (!document.exists()) return this.$router.replace('/pastes');
-      const data = document.data();
-      this.title = data.title;
-      this.author = data.author;
-      this.content = data.content;
-      this.likeCount = data.likeCount;
+    const localPasteReview = localStorage.getItem(this.pasteId);
+    if (localPasteReview != null) this.pasteReview = localPasteReview;
+    this.unsubscribe = onSnapshot(doc(store(), 'pastes', this.pasteId), document => {
+      if (!document.exists()) return this.$router.replace('/404');
+      const paste = document.data();
+      this.title = paste.title;
+      this.author = paste.author;
+      this.content = paste.content;
+      this.authorId = paste.authorId;
+      this.likeCount = paste.likeCount;
     });
   },
   unmounted() {
@@ -56,7 +61,7 @@ export default {
   },
   methods: {
     async like() {
-      await updateDoc(doc(firestore, 'pastes', this.pasteId), {
+      await updateDoc(doc(store(), 'pastes', this.pasteId), {
         likeCount: this.likeCount + (this.pasteReview === 'like' ? -1 : +1)
       });
       if (this.pasteReview === 'like') {
@@ -74,7 +79,7 @@ export default {
     },
     async remove() {
       if (confirm('are you sure you want to delete this paste?')) {
-        await deleteDoc(doc(firestore, 'pastes', this.pasteId));
+        await deleteDoc(doc(store(), 'pastes', this.pasteId));
         alert('paste deleted successfully!');
         this.$router.replace('/');
       }
@@ -96,21 +101,14 @@ export default {
       v-html="markdown.render(content)"
     />
     <div v-if="pasteId !== 'preview'" class="buttons">
-      <button
-        class="soft-button gradient-button"
+      <PasteButton
         :class="{ active: pasteReview === 'like' }"
-        title="like"
-        @click="like"
+        icon="heart" title="like" @click="like"
       >
-        <FontAwesomeIcon class="fa-fw" :icon="['fas', 'heart']" />
         <span v-if="likeCount > 0">{{ likeCount }}</span>
-      </button>
-      <button class="soft-button gradient-button" title="edit" @click="edit">
-        <FontAwesomeIcon class="fa-fw" :icon="['fas', 'pencil']" />
-      </button>
-      <button class="soft-button gradient-button" title="delete" @click="remove">
-        <FontAwesomeIcon class="fa-fw" :icon="['fas', 'trash']" />
-      </button>
+      </PasteButton>
+      <PasteButton v-if="userId === authorId" icon="pencil" title="edit" @click="edit" />
+      <PasteButton v-if="userId === authorId" icon="trash" title="delete" @click="remove" />
     </div>
   </main>
 </template>

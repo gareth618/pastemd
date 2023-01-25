@@ -10,7 +10,7 @@ export default {
   },
   methods: {
     copyLink() {
-      const baseUrl = process.env.NODE_ENV === 'production' ? 'https://pastemd.netlify.com' : 'http://localhost:3000';
+      const baseUrl = process.env.NODE_ENV === 'production' ? 'https://pastemd.netlify.app' : 'http://localhost:3000';
       navigator.clipboard.writeText(`${baseUrl}/pastes/${this.pasteId}`);
       this.copied = true;
       setTimeout(() => this.copied = false, 1618);

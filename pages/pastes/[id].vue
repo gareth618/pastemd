@@ -122,13 +122,14 @@ main {
 }
 
 .title {
-  padding: .25rem;
   font-size: 3rem;
+  font-family: 'Montserrat Alternates', sans-serif;
   text-align: center;
 }
 
 .author {
   font-size: 2rem;
+  font-family: 'Montserrat Alternates', sans-serif;
   text-align: center;
   opacity: .75;
 }

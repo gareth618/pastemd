@@ -4,6 +4,9 @@
 
 .markdown :where(h1, h2, h3, h4, h5, h6) {
   margin: 2rem 0 1rem 0;
+  color: white;
+  line-height: 1.2;
+  font-family: 'Montserrat Alternates', sans-serif;
 }
 
 .markdown h1 { font-size: 2.0rem; }
@@ -13,6 +16,11 @@
 .markdown h5 { font-size: 1.2rem; }
 .markdown h6 { font-size: 1.0rem; }
 
+.markdown h1 {
+  padding-bottom: .5rem;
+  border-bottom: 2px dashed var(--bordground);
+}
+
 .markdown p {
   margin: 1rem 0;
 }
@@ -20,7 +28,7 @@
 .markdown hr {
   margin: 1rem 0;
   height: 2px;
-  background-image: linear-gradient(to right, transparent, 5%, var(--middground), 95%, transparent);
+  background-image: linear-gradient(to right, transparent, 5%, var(--bordground), 95%, transparent);
   border: none;
 }
 
@@ -43,20 +51,48 @@
   padding-inline-start: 2.5rem;
 }
 
-.markdown ul li::marker {
+.markdown :where(ul, ol) :where(ul, ol) {
+  margin: 0;
+}
+
+.markdown ul {
+  list-style-type: disc !important;
+}
+
+.markdown ul > li::marker {
   color: var(--green);
 }
 
-.markdown ol li {
+.markdown ul ul > li::marker {
+  color: var(--bluee);
+}
+
+.markdown ul ul ul > li::marker {
+  color: var(--green);
+}
+
+.markdown ul ul ul ul > li::marker {
+  color: var(--bluee);
+}
+
+.markdown ul ul ul ul ul > li::marker {
+  color: var(--green);
+}
+
+.markdown ol {
+  counter-reset: ol-list;
+}
+
+.markdown ol > li {
   counter-increment: ol-list;
   position: relative;
 }
 
-.markdown ol li::marker {
+.markdown ol > li::marker {
   content: '';
 }
 
-.markdown ol li::before {
+.markdown ol > li::before {
   content: counter(ol-list);
   position: absolute;
   top: .25rem;
@@ -71,8 +107,24 @@
   font-size: .8rem;
   font-weight: bold;
   font-family: 'Montserrat Alternates', sans-serif;
-  background-color: var(--bluee);
   border-radius: 50%;
+  background-color: var(--bluee);
+}
+
+.markdown ol ol > li::before {
+  background-color: var(--green);
+}
+
+.markdown ol ol ol > li::before {
+  background-color: var(--bluee);
+}
+
+.markdown ol ol ol ol > li::before {
+  background-color: var(--green);
+}
+
+.markdown ol ol ol ol ol > li::before {
+  background-color: var(--bluee);
 }
 
 .markdown table {
@@ -119,6 +171,18 @@
   padding: 0;
   background: none;
   border: none;
+}
+
+.markdown :where(pre, .katex-block) {
+  overflow: auto;
+}
+
+.markdown :where(pre, .katex-block)::-webkit-scrollbar {
+  height: .5rem;
+}
+
+.markdown :where(pre, .katex-block)::-webkit-scrollbar-thumb {
+  background-color: var(--bordground);
 }
 
 @media (min-width: 701px) {

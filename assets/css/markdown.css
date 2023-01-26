@@ -17,6 +17,7 @@
 .markdown h6 { font-size: 1.0rem; }
 
 .markdown h1 {
+  width: fit-content;
   padding-bottom: .5rem;
   border-bottom: 2px dashed var(--bordground);
 }

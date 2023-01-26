@@ -8,7 +8,6 @@ This [paste](https://pastemd.netlify.app/pastes/pGQk4YYgnDnZjhMRcuxd) is a reall
 
 ## ToDo
 
-- [ ] meta
 - [ ] my pastes page
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/52142d17-58d8-4b84-8fa2-cc0bbff6aa9b/deploy-status)](https://app.netlify.com/sites/pastemd/deploys)

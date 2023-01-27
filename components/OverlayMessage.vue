@@ -1,4 +1,9 @@
 <script>
+const baseUrl
+  = process.env.NODE_ENV === 'production'
+  ? 'https://pastemd.netlify.app'
+  : 'http://localhost:3000';
+
 export default {
   data() {
     return {
@@ -10,7 +15,6 @@ export default {
   },
   methods: {
     copyLink() {
-      const baseUrl = process.env.NODE_ENV === 'production' ? 'https://pastemd.netlify.app' : 'http://localhost:3000';
       navigator.clipboard.writeText(`${baseUrl}/pastes/${this.pasteId}`);
       this.copied = true;
       setTimeout(() => this.copied = false, 1618);
@@ -40,16 +44,6 @@ export default {
 </template>
 
 <style scoped>
-.v-enter-active,
-.v-leave-active {
-  transition: opacity 1s ease;
-}
-
-.v-enter-from,
-.v-leave-to {
-  opacity: 0;
-}
-
 .overlay {
   z-index: 1;
   padding: 2rem;

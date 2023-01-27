@@ -1,5 +1,6 @@
 .markdown {
   line-height: 1.618;
+  font-family: 'Merriweather', serif;
 }
 
 .markdown :where(h1, h2, h3, h4, h5, h6) {
@@ -174,15 +175,15 @@
   border: none;
 }
 
-.markdown :where(pre, .katex-block) {
+.markdown :where(pre, table, .katex-block) {
   overflow: auto;
 }
 
-.markdown :where(pre, .katex-block)::-webkit-scrollbar {
+.markdown :where(pre, table, .katex-block)::-webkit-scrollbar {
   height: .5rem;
 }
 
-.markdown :where(pre, .katex-block)::-webkit-scrollbar-thumb {
+.markdown :where(pre, table, .katex-block)::-webkit-scrollbar-thumb {
   background-color: var(--bordground);
 }
 

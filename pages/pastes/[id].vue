@@ -118,18 +118,15 @@ main {
   margin: 2rem auto;
   width: min(100%, 800px);
   color: var(--foreground);
-  font-family: 'Merriweather', serif;
 }
 
 .title {
   font-size: 3rem;
-  font-family: 'Montserrat Alternates', sans-serif;
   text-align: center;
 }
 
 .author {
   font-size: 2rem;
-  font-family: 'Montserrat Alternates', sans-serif;
   text-align: center;
   opacity: .75;
 }
@@ -177,7 +174,16 @@ article:deep(img.emoji) {
   font-size: 1rem;
   text-align: center;
   color: var(--bordground);
-  font-family: 'Montserrat Alternates', sans-serif;
   cursor: default;
+}
+
+@media (max-width: 500px) {
+  main {
+    margin: 0 auto;
+  }
+
+  article {
+    margin: 1rem 0;
+  }
 }
 </style>

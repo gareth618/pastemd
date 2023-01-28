@@ -43,7 +43,7 @@
 
 .markdown blockquote {
   margin: 1rem 0;
-  padding: 1px 0 1px 1rem;
+  padding: 1px 1rem;
   background-color: var(--middground);
   border-left: .5rem solid var(--bluee);
 }

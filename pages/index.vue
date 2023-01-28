@@ -87,7 +87,11 @@ export default {
         <input v-model="title" placeholder="title" />
         <input v-model="author" placeholder="author" />
       </div>
-      <MarkdownEditor class="editor" v-model="content" placeholder="content" />
+      <MarkdownEditor
+        class="editor"
+        v-model="content"
+        placeholder="content"
+      />
       <div class="bottom flex-right">
         <EditorButton icon="eye" @click="preview" :error="previewError">
           preview
@@ -150,7 +154,7 @@ input::selection {
 
 .editor {
   width: 100%;
-  height: 300px;
+  height: 350px;
 }
 
 button {
@@ -164,6 +168,10 @@ button:not(.gradient-border) {
 }
 
 @media (max-width: 500px) {
+  .editor {
+    height: 300px;
+  }
+
   .top {
     flex-direction: column;
   }

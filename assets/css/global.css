@@ -18,7 +18,7 @@ html {
 
 body {
   margin: 0;
-  padding: 2rem 1rem;
+  padding: 3rem 1rem;
   color: var(--foreground);
   background-color: var(--background);
 }
@@ -67,4 +67,10 @@ a {
   color: inherit;
   text-decoration: none;
   outline: none;
+}
+
+@media (max-width: 500px) {
+  body {
+    padding: 2rem 1rem;
+  }
 }

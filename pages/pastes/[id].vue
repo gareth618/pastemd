@@ -115,7 +115,7 @@ export default {
 
 <style scoped>
 main {
-  margin: 2rem auto;
+  margin: 0 auto;
   width: min(100%, 800px);
   color: var(--foreground);
 }
@@ -132,7 +132,7 @@ main {
 }
 
 article {
-  margin: 2rem 0;
+  margin: 1rem 0;
   width: 100%;
 }
 
@@ -144,6 +144,7 @@ article:deep(img.emoji) {
 .buttons {
   display: flex;
   gap: 1rem;
+  margin-bottom: 1rem;
 }
 
 .buttons button {
@@ -175,15 +176,5 @@ article:deep(img.emoji) {
   text-align: center;
   color: var(--bordground);
   cursor: default;
-}
-
-@media (max-width: 500px) {
-  main {
-    margin: 0 auto;
-  }
-
-  article {
-    margin: 1rem 0;
-  }
 }
 </style>

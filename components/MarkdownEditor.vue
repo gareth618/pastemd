@@ -83,10 +83,11 @@ export default {
     },
     formatSelection(event) {
       const [lo, hi] = this.getSelection();
-      if ('([{$*_~'.includes(event.key) && lo !== hi) {
+      if ('<([{$*_~`\'"'.includes(event.key) && lo !== hi) {
         const open = event.key;
         const close
-          = event.key === '(' ? ')'
+          = event.key === '<' ? '>'
+          : event.key === '(' ? ')'
           : event.key === '[' ? ']'
           : event.key === '{' ? '}'
           : event.key;

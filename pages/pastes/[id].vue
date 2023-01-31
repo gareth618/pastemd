@@ -178,3 +178,31 @@ article:deep(img.emoji) {
   cursor: default;
 }
 </style>
+
+<style>
+@media print {
+  .title {
+    color: black;
+  }
+
+  .author {
+    color: #080808;
+  }
+
+  .markdown {
+    color: #222;
+  }
+
+  .markdown :where(h1, h2, h3, h4, h5, h6) {
+    color: black;
+  }
+
+  .markdown img:not(.emoji) {
+    height: 100px;
+  }
+
+  .buttons {
+    display: none !important;
+  }
+}
+</style>

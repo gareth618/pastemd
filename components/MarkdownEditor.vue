@@ -19,8 +19,11 @@ export default {
   },
   methods: {
     highlight,
-    syncScroll() {
+    syncScrollInput() {
       this.$refs.output.scrollTop = this.$refs.input.scrollTop;
+    },
+    syncScrollOutput() {
+      this.$refs.input.scrollTop = this.$refs.output.scrollTop;
     },
     getSelection() {
       return [this.$refs.input.selectionStart, this.$refs.input.selectionEnd];
@@ -118,7 +121,7 @@ export default {
 
 <template>
   <div>
-    <pre ref="output"><code
+    <pre ref="output" @scroll="syncScrollOutput"><code
       class="language-markdown"
       v-html="highlight(content + (content.slice(-1) === '\n' ? ' ' : ''), 'markdown')"
     /></pre>
@@ -126,7 +129,7 @@ export default {
       ref="input"
       :placeholder="placeholder"
       v-model="content"
-      @scroll="syncScroll"
+      @scroll="syncScrollInput"
       @keydown="formatSelection"
       @keydown.enter="tabbedEnter"
       @keydown.ctrl.t="trimContent"

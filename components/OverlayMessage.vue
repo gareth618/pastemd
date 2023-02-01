@@ -45,7 +45,7 @@ export default {
 
 <style scoped>
 .overlay {
-  z-index: 1;
+  z-index: 2;
   padding: 2rem;
   backdrop-filter: brightness(30%);
 }

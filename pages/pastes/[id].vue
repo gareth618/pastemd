@@ -111,6 +111,7 @@ export default {
       <PasteButton v-if="userId === authorId" icon="trash" title="delete" @click="remove" />
     </div>
   </main>
+  <NavBar />
 </template>
 
 <style scoped>
@@ -197,11 +198,11 @@ article:deep(img.emoji) {
     color: black;
   }
 
-  .markdown img:not(.emoji) {
-    height: 100px;
+  .buttons {
+    display: none !important;
   }
 
-  .buttons {
+  nav {
     display: none !important;
   }
 }

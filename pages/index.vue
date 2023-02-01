@@ -105,6 +105,7 @@ export default {
   <Transition>
     <OverlayMessage v-if="published" :pasteId="pasteId" />
   </Transition>
+  <NavBar />
 </template>
 
 <style scoped>

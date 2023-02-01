@@ -50,6 +50,7 @@ export default {
   <TransitionGroup v-else tag="main">
     <NuxtLink v-for="paste of pastes" :to="paste.url" :key="paste.url">{{ paste.title }}</NuxtLink>
   </TransitionGroup>
+  <NavBar />
 </template>
 
 <style scoped>

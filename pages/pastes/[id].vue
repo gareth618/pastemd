@@ -198,6 +198,10 @@ article:deep(img.emoji) {
     color: black;
   }
 
+  .markdown pre {
+    white-space: pre-wrap;
+  }
+
   .buttons {
     display: none !important;
   }

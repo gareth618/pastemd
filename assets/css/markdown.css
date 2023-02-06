@@ -187,6 +187,19 @@
   background-color: var(--bordground);
 }
 
+.markdown s {
+  text-decoration: none;
+}
+
+.markdown s::before {
+  content: 'done';
+  margin-right: .5rem;
+  padding: .1rem .25rem;
+  font-weight: bold;
+  font-family: 'Montserrat Alternates', sans-serif;
+  background-color: forestgreen;
+}
+
 @media (min-width: 701px) {
   .markdown p {
     text-align: justify;

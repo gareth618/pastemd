@@ -202,6 +202,10 @@ article:deep(img.emoji) {
     white-space: pre-wrap;
   }
 
+  .markdown hr {
+    border-bottom: 2px solid var(--bordground);
+  }
+
   .buttons {
     display: none !important;
   }

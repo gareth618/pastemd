@@ -15,10 +15,8 @@
     "@fortawesome/free-regular-svg-icons": "^6.2.1",
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@fortawesome/vue-fontawesome": "^3.0.2",
-    "@iktakahiro/markdown-it-katex": "^4.0.1",
+    "@traptitech/markdown-it-katex": "^3.6.0",
     "firebase": "^9.16.0",
-    "install": "^0.13.0",
-    "katex": "^0.16.4",
     "markdown-it": "^13.0.1",
     "prismjs": "^1.29.0",
     "twemoji": "^14.0.2"

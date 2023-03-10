@@ -6,7 +6,7 @@ import { doc, updateDoc, deleteDoc, onSnapshot } from '@firebase/firestore';
 import MarkdownIt from 'markdown-it';
 import twemoji from 'twemoji';
 import highlight from '@/prism';
-import katex from '@iktakahiro/markdown-it-katex';
+import katex from '@traptitech/markdown-it-katex';
 
 export default {
   data() {

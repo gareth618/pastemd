@@ -28,6 +28,15 @@ export default {
       unsubscribe: () => { }
     };
   },
+  computed: {
+    html() {
+      let headerCount = 0;
+      return this.markdown.render(this.content).replace(/<h([1-6])>(.+?)<\/h([1-6])>/g, (_, level, title) => {
+        const headerId = `header-${++headerCount}`;
+        return `<h${level} id="${headerId}"><a href="#${headerId}">${title}</a></h${level}>`;
+      });
+    }
+  },
   async mounted() {
     onAuthStateChanged(auth(), user => this.userId = user?.uid || '');
     if (this.pasteId === 'preview') {
@@ -95,11 +104,7 @@ export default {
   <main class="flex-col">
     <h1 class="title gradient-text">{{ title }}</h1>
     <div class="author">{{ author }}</div>
-    <article
-      ref="article"
-      class="markdown"
-      v-html="markdown.render(content)"
-    />
+    <article ref="article" class="markdown" v-html="html" />
     <div v-if="pasteId !== 'preview'" class="buttons">
       <PasteButton
         :class="{ active: pasteReview === 'like' }"

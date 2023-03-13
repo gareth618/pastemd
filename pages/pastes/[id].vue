@@ -31,10 +31,13 @@ export default {
   computed: {
     html() {
       let headerCount = 0;
-      return this.markdown.render(this.content).replace(/<h([1-6])>(.+?)<\/h([1-6])>/g, (_, level, title) => {
+      let code = this.markdown.render(this.content);
+      code = code.replace(/<a href="/g, '<a target="_blank" href="');
+      code = code.replace(/<h([1-6])>(.+?)<\/h([1-6])>/g, (_, level, title) => {
         const headerId = `header-${++headerCount}`;
         return `<h${level} id="${headerId}"><a href="#${headerId}">${title}</a></h${level}>`;
       });
+      return code;
     }
   },
   async mounted() {

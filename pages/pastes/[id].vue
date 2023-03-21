@@ -130,6 +130,7 @@ main {
 }
 
 .title {
+  padding: .25rem;
   font-size: 3rem;
   text-align: center;
 }

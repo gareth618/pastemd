@@ -84,8 +84,8 @@ export default {
     <h1 class="gradient-text">PasteMd</h1>
     <form class="flex-col" @submit.prevent>
       <div class="top flex-row">
-        <input v-model="title" placeholder="title" />
-        <input v-model="author" placeholder="author" />
+        <input v-model.trim="title" placeholder="title" />
+        <input v-model.trim="author" placeholder="author" />
       </div>
       <MarkdownEditor
         class="editor"

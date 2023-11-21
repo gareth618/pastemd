@@ -70,6 +70,11 @@ a {
   outline: none;
 }
 
+::selection {
+  color: var(--background);
+  background-color: var(--green);
+}
+
 @media (max-width: 500px) {
   body {
     padding: 2rem 1rem;

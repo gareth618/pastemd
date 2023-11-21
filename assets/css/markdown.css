@@ -18,8 +18,9 @@
 .markdown h6 { font-size: 1.0rem; }
 
 .markdown h1 {
-  width: fit-content;
+  margin-top: 3rem;
   padding-bottom: .5rem;
+  width: fit-content;
   border-bottom: 2px dashed var(--bordground);
 }
 
@@ -44,7 +45,7 @@
 .markdown blockquote {
   margin: 1rem 0;
   padding: 1px 1rem;
-  background-color: var(--middground);
+  background-color: var(--randground);
   border-left: .5rem solid var(--bluee);
 }
 
@@ -110,6 +111,7 @@
   font-weight: bold;
   font-family: 'Montserrat Alternates', sans-serif;
   border-radius: 50%;
+  color: white;
   background-color: var(--bluee);
 }
 
@@ -164,14 +166,12 @@
 .markdown code {
   padding: .1rem .25rem;
   background-color: var(--middground);
-  border: 1px solid var(--bordground);
 }
 
 .markdown pre {
   margin: 1rem 0;
   padding: 1rem;
   background-color: var(--middground);
-  border: 2px solid var(--bordground);
 }
 
 .markdown pre code {

@@ -1,10 +1,11 @@
 :root {
-  --foreground: #ddd;
-  --background: #222;
+  --foreground: #e8e8e8;
+  --background: #181818;
+  --randground: #222;
   --middground: #333;
   --bordground: #888;
   --green: #42d392;
   --bluee: #647eff;
-  --black-gradient: linear-gradient(135deg, #333, #111);
+  --black-gradient: linear-gradient(135deg, var(--middground), var(--background));
   --green-gradient: linear-gradient(315deg, var(--green) 25%, var(--bluee));
 }

@@ -5,14 +5,6 @@
   color: hsl(30, 20%, 50%);
 }
 
-.token.punctuation {
-  opacity: .7;
-}
-
-.token.namespace {
-  opacity: .7;
-}
-
 .token.property,
 .token.tag,
 .token.boolean,

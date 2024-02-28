@@ -8,6 +8,7 @@
   color: white;
   line-height: 1.2;
   font-family: 'Montserrat Alternates', sans-serif;
+  scroll-margin-top: 1.5rem;
 }
 
 .markdown h1 { font-size: 2.0rem; }

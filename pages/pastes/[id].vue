@@ -37,6 +37,8 @@ export default {
         const headerId = `header-${++headerCount}`;
         return `<h${level} id="${headerId}"><a href="#${headerId}">${title}</a></h${level}>`;
       });
+      code = twemoji.parse(code, { folder: 'svg', ext: '.svg' });
+      code = code.replaceAll('https://twemoji.maxcdn.com/v/14.0.2/svg/', 'https://abs-0.twimg.com/emoji/v2/svg/');
       return code;
     }
   },
@@ -64,12 +66,6 @@ export default {
   },
   unmounted() {
     this.unsubscribe();
-  },
-  updated() {
-    twemoji.parse(this.$refs.article, {
-      folder: 'svg',
-      ext: '.svg'
-    });
   },
   methods: {
     async like() {

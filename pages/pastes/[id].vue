@@ -98,10 +98,10 @@ export default {
 
 <template>
   <Head>
-    <Title>{{ title.replace(/^.*?(?=\w)/, '') }}</Title>
+    <Title>{{ title.replace(/^.*?(?=[\wîâășțÎÂĂȘȚ])/, '') }}</Title>
   </Head>
   <main class="flex-col">
-    <h1 class="title gradient-text">{{ title.replace(/^.*?(?=\w)/, '') }}</h1>
+    <h1 class="title gradient-text">{{ title.replace(/^.*?(?=[\wîâășțÎÂĂȘȚ])/, '') }}</h1>
     <div class="author">{{ author }}</div>
     <article ref="article" class="markdown" v-html="html" />
     <div v-if="pasteId !== 'preview'" class="buttons">
